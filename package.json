@@ -1,9 +1,9 @@
 {
-  "name": "react-hook-use-form",
+  "name": "@caesium/hook-use-form",
   "version": "1.2.0",
   "description": "",
   "repository": {
-    "url": "https://github.com/Arcath/react-hook-use-form",
+    "url": "https://github.com/CaesiumJS/hook-use-form",
     "type": "git"
   },
   "main": "lib/react-hook-use-form.js",
