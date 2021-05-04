@@ -5,7 +5,7 @@
 ## Install
 
 ```bash
-npm install --save react-hook-use-form
+npm install --save @caesium/hook-use-form
 ```
 
 ## Usage
