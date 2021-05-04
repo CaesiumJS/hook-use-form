@@ -60,7 +60,7 @@ export interface FormHookOutput<T>{
   /**
    * Returns the required fields for a label.
    */
-  label: <K extends keyof T>(field: K) => {for: string}
+  label: <K extends keyof T>(field: K) => {htmlFor: string}
 
   /**
    * Has the value changed from its original.
@@ -90,7 +90,11 @@ export interface ControlledInput<T, K extends keyof T = keyof T>{
     name: K
     'aria-label': string
     id: string
-  }
+  },
+
+  label: () => ReturnType<FormHookOutput<T>["label"]>
+
+  'aria-label': string
 }
 
 interface DispatchAction<T, K extends keyof T = keyof T>{
@@ -157,7 +161,9 @@ export function useForm<T>(initialData: T, options?: UseFormOptions): FormHookOu
         onChange: (e) => update((e.target as any).value),
         'aria-label': ariaLabel,
         id: ariaLabel
-      }
+      },
+      label: () => label(field),
+      'aria-label': ariaLabel
     }
   }
 
@@ -187,7 +193,7 @@ export function useForm<T>(initialData: T, options?: UseFormOptions): FormHookOu
     const id = options && options.ariaModel ? `${options.ariaModel}-${field}` : `${field}`
     
     return {
-      for: id
+      htmlFor: id
     }
   }
 

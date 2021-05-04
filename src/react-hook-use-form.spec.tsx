@@ -285,12 +285,13 @@ describe("React Form Hooks", () => {
 
       // This is to test Typescript.
       // `value` should have the type number
-      const { value, update } = controlledInput("age");
+      const { value, update, label: controlledLabel } = controlledInput("age");
 
       return (
         <form {...formBind()}>
           <label {...label('name')}>Name:</label>
           <input {...bind("name")} id="name" />
+          <label {...controlledLabel()}>Age:</label>
           <input
             value={value}
             onChange={(e) => {
@@ -303,8 +304,8 @@ describe("React Form Hooks", () => {
 
     const { getByLabelText } = render(<Component />);
 
-    const input = getByLabelText("person-name");
+    const nameInput = getByLabelText("person-name");
 
-    expect(input).not.toBeNull();
+    expect(nameInput).not.toBeNull();
   });
 });
