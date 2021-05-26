@@ -16,8 +16,8 @@ describe("React Form Hooks", () => {
       onSubmit((data) => {
         expect(data.name).toBe("test");
         expect(data.age).toBe(10);
-        expect(changed('age')).toBe(false);
-        expect(changed('name')).toBe(true);
+        expect(changed("age")).toBe(false);
+        expect(changed("name")).toBe(true);
         expect(changed()).toBe(true);
         pass = true;
       });
@@ -164,7 +164,7 @@ describe("React Form Hooks", () => {
     const btnSet = "Set";
 
     const Component: React.FunctionComponent = () => {
-      const { bind, formBind, onSubmit, set, clear } = useForm({
+      const { bind, formBind, onSubmit, set, clear, submit } = useForm({
         name: "",
         age: 10,
       });
@@ -187,7 +187,14 @@ describe("React Form Hooks", () => {
           >
             {btnSet}
           </button>
-          <input type="submit" value="submit" />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              submit();
+            }}
+          >
+            submit
+          </button>
         </form>
       );
     };
@@ -212,10 +219,9 @@ describe("React Form Hooks", () => {
           <button>
             Set
           </button>
-          <input
-            type="submit"
-            value="submit"
-          />
+          <button>
+            submit
+          </button>
         </form>
       </div>
     `);
@@ -246,7 +252,7 @@ describe("React Form Hooks", () => {
       }, [set]);
 
       onSubmit(({ title }) => {
-        expect(changed('title')).toBe(true);
+        expect(changed("title")).toBe(true);
         expect(title).toBe(TEST_STRING);
       });
 
@@ -289,7 +295,7 @@ describe("React Form Hooks", () => {
 
       return (
         <form {...formBind()}>
-          <label {...label('name')}>Name:</label>
+          <label {...label("name")}>Name:</label>
           <input {...bind("name")} id="name" />
           <label {...controlledLabel()}>Age:</label>
           <input

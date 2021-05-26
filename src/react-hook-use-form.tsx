@@ -68,6 +68,13 @@ export interface FormHookOutput<T>{
    * @param field (Optional) limit search to a single field.
    */
   changed: (field?: keyof T) => boolean
+
+  /**
+   * Submit the form. Useful if you need a button outside the form to submit the value.
+   * 
+   * _Make sure to bind the form aswell incase it is submitted by another means_
+   */
+  submit: () => void
 }
 
 export interface ControlledInput<T, K extends keyof T = keyof T>{
@@ -206,6 +213,10 @@ export function useForm<T>(initialData: T, options?: UseFormOptions): FormHookOu
     }
   }
 
+  const submit = () => {
+    onSubmitCallback(data)
+  }
+
   const changed = (field?: keyof T): boolean => {
     if(field){
       console.dir(originalData)
@@ -233,6 +244,7 @@ export function useForm<T>(initialData: T, options?: UseFormOptions): FormHookOu
     formBind,
     set: staticFunctions.current.set,
     label,
-    changed
+    changed,
+    submit
   }
 }
