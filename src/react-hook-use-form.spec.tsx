@@ -1,46 +1,46 @@
-import React, { useEffect } from "react";
-import { fireEvent, render } from "@testing-library/react";
+import React, {useEffect} from 'react'
+import {fireEvent, render} from '@testing-library/react'
 
-import { useForm } from "./react-hook-use-form";
+import {useForm} from './react-hook-use-form'
 
-describe("React Form Hooks", () => {
-  it("should function as a controlled form", () => {
-    let pass = false;
+describe('React Form Hooks', () => {
+  it('should function as a controlled form', () => {
+    let pass = false
 
     const Component: React.FunctionComponent = () => {
-      const { bind, formBind, onSubmit, controlledInput, changed } = useForm({
-        name: "",
-        age: 10,
-      });
+      const {bind, formBind, onSubmit, controlledInput, changed} = useForm({
+        name: '',
+        age: 10
+      })
 
-      onSubmit((data) => {
-        expect(data.name).toBe("test");
-        expect(data.age).toBe(10);
-        expect(changed("age")).toBe(false);
-        expect(changed("name")).toBe(true);
-        expect(changed()).toBe(true);
-        pass = true;
-      });
+      onSubmit(data => {
+        expect(data.name).toBe('test')
+        expect(data.age).toBe(10)
+        expect(changed('age')).toBe(false)
+        expect(changed('name')).toBe(true)
+        expect(changed()).toBe(true)
+        pass = true
+      })
 
       // This is to test Typescript.
       // `value` should have the type number
-      const { value, update } = controlledInput("age");
+      const {value, update} = controlledInput('age')
 
       return (
         <form {...formBind()}>
-          <input {...bind("name")} id="name" />
+          <input {...bind('name')} id="name" />
           <input
             value={value}
-            onChange={(e) => {
-              update(parseInt(e.target.value));
+            onChange={e => {
+              update(parseInt(e.target.value))
             }}
           />
           <input type="submit" value="submit" />
         </form>
-      );
-    };
+      )
+    }
 
-    const { container, getByLabelText, getByText } = render(<Component />);
+    const {container, getByLabelText, getByText} = render(<Component />)
 
     expect(container).toMatchInlineSnapshot(`
       <div>
@@ -60,48 +60,48 @@ describe("React Form Hooks", () => {
           />
         </form>
       </div>
-    `);
+    `)
 
-    const input = getByLabelText("name");
+    const input = getByLabelText('name')
 
-    fireEvent.change(input, { target: { value: "test" } });
+    fireEvent.change(input, {target: {value: 'test'}})
 
-    const submitButton = getByText("submit");
+    const submitButton = getByText('submit')
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButton)
 
-    expect(pass).toBe(true);
-  });
+    expect(pass).toBe(true)
+  })
 
-  it("should validate input", () => {
+  it('should validate input', () => {
     //let pass = false
 
     const Component = () => {
-      const { formBind, bind, validate, valid } = useForm({
-        name: "",
-        email: "",
-      });
+      const {formBind, bind, validate, valid} = useForm({
+        name: '',
+        email: ''
+      })
 
-      validate("name", (value) => {
+      validate('name', value => {
         //pass = true
-        return value === "pass";
-      });
+        return value === 'pass'
+      })
 
-      validate("email", () => {
-        return true;
-      });
+      validate('email', () => {
+        return true
+      })
 
       return (
         <form {...formBind()}>
-          <input {...bind("name")} />
-          <input {...bind("email")} />
-          <b>{valid() ? "valid" : "invalid"}</b>
-          <i>{valid("email") ? "valid" : "invalid"}</i>
+          <input {...bind('name')} />
+          <input {...bind('email')} />
+          <b>{valid() ? 'valid' : 'invalid'}</b>
+          <i>{valid('email') ? 'valid' : 'invalid'}</i>
         </form>
-      );
-    };
+      )
+    }
 
-    const { container, getByLabelText } = render(<Component />);
+    const {container, getByLabelText} = render(<Component />)
 
     expect(container).toMatchInlineSnapshot(`
       <div>
@@ -126,12 +126,12 @@ describe("React Form Hooks", () => {
           </i>
         </form>
       </div>
-    `);
+    `)
 
-    const nameInput = getByLabelText("name");
+    const nameInput = getByLabelText('name')
     //const emailInput = getByLabelText('email')
 
-    fireEvent.change(nameInput, { target: { value: "pass" } });
+    fireEvent.change(nameInput, {target: {value: 'pass'}})
 
     expect(container).toMatchInlineSnapshot(`
       <div>
@@ -156,56 +156,56 @@ describe("React Form Hooks", () => {
           </i>
         </form>
       </div>
-    `);
-  });
+    `)
+  })
 
-  it("should function support set and a clear", () => {
-    let pass = false;
-    const btnSet = "Set";
+  it('should function support set and a clear', () => {
+    let pass = false
+    const btnSet = 'Set'
 
     const Component: React.FunctionComponent = () => {
-      const { bind, formBind, onSubmit, set, clear, submit } = useForm({
-        name: "",
-        age: 10,
-      });
+      const {bind, formBind, onSubmit, set, clear, submit} = useForm({
+        name: '',
+        age: 10
+      })
 
-      onSubmit((data) => {
-        expect(data.name).toBe("set");
-        expect(data.age).toBe(10);
-        pass = true;
-        clear();
-      });
+      onSubmit(data => {
+        expect(data.name).toBe('set')
+        expect(data.age).toBe(10)
+        pass = true
+        clear()
+      })
 
       return (
         <form {...formBind()}>
-          <input {...bind("name")} />
+          <input {...bind('name')} />
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              set({ name: "set" });
+            onClick={e => {
+              e.preventDefault()
+              set({name: 'set'})
             }}
           >
             {btnSet}
           </button>
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              submit();
+            onClick={e => {
+              e.preventDefault()
+              submit()
             }}
           >
             submit
           </button>
         </form>
-      );
-    };
+      )
+    }
 
-    const { container, getByText, getByLabelText } = render(<Component />);
+    const {container, getByText, getByLabelText} = render(<Component />)
 
-    const setButton = getByText(btnSet);
-    const nameInput = getByLabelText("name");
-    const submitButton = getByText("submit");
+    const setButton = getByText(btnSet)
+    const nameInput = getByLabelText('name')
+    const submitButton = getByText('submit')
 
-    fireEvent.change(nameInput, { target: { value: "new name" } });
+    fireEvent.change(nameInput, {target: {value: 'new name'}})
 
     expect(container).toMatchInlineSnapshot(`
       <div>
@@ -224,37 +224,37 @@ describe("React Form Hooks", () => {
           </button>
         </form>
       </div>
-    `);
+    `)
 
-    fireEvent.click(setButton);
+    fireEvent.click(setButton)
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButton)
 
-    expect(pass).toBe(true);
-  });
+    expect(pass).toBe(true)
+  })
 
-  it("should supply set etc.. in a stable way", () => {
-    const TEST_STRING = "test";
+  it('should supply set etc.. in a stable way', () => {
+    const TEST_STRING = 'test'
 
-    let runCount = 0;
+    let runCount = 0
 
     const Component: React.FunctionComponent = () => {
-      const { set, formBind, onSubmit, changed } = useForm({
-        title: "",
-      });
+      const {set, formBind, onSubmit, changed} = useForm({
+        title: ''
+      })
 
       useEffect(() => {
         set({
-          title: TEST_STRING,
-        });
+          title: TEST_STRING
+        })
 
-        runCount++;
-      }, [set]);
+        runCount++
+      }, [set])
 
-      onSubmit(({ title }) => {
-        expect(changed("title")).toBe(true);
-        expect(title).toBe(TEST_STRING);
-      });
+      onSubmit(({title}) => {
+        expect(changed('title')).toBe(true)
+        expect(title).toBe(TEST_STRING)
+      })
 
       return (
         <>
@@ -262,56 +262,56 @@ describe("React Form Hooks", () => {
             <input type="submit" value="submit" />
           </form>
         </>
-      );
-    };
+      )
+    }
 
-    const { getByText } = render(<Component />);
+    const {getByText} = render(<Component />)
 
-    const submitButton = getByText("submit");
+    const submitButton = getByText('submit')
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButton)
 
-    expect(runCount).toBe(1);
-  });
+    expect(runCount).toBe(1)
+  })
 
-  it("should support `ariaModel`", () => {
+  it('should support `ariaModel`', () => {
     const Component: React.FunctionComponent = () => {
-      const { bind, formBind, onSubmit, controlledInput, label } = useForm(
+      const {bind, formBind, onSubmit, controlledInput, label} = useForm(
         {
-          name: "",
-          age: 10,
+          name: '',
+          age: 10
         },
-        { ariaModel: "person" }
-      );
+        {ariaModel: 'person'}
+      )
 
-      onSubmit((data) => {
-        expect(data.name).toBe("test");
-        expect(data.age).toBe(10);
-      });
+      onSubmit(data => {
+        expect(data.name).toBe('test')
+        expect(data.age).toBe(10)
+      })
 
       // This is to test Typescript.
       // `value` should have the type number
-      const { value, update, label: controlledLabel } = controlledInput("age");
+      const {value, update, label: controlledLabel} = controlledInput('age')
 
       return (
         <form {...formBind()}>
-          <label {...label("name")}>Name:</label>
-          <input {...bind("name")} id="name" />
+          <label {...label('name')}>Name:</label>
+          <input {...bind('name')} id="name" />
           <label {...controlledLabel()}>Age:</label>
           <input
             value={value}
-            onChange={(e) => {
-              update(parseInt(e.target.value));
+            onChange={e => {
+              update(parseInt(e.target.value))
             }}
           />
         </form>
-      );
-    };
+      )
+    }
 
-    const { getByLabelText } = render(<Component />);
+    const {getByLabelText} = render(<Component />)
 
-    const nameInput = getByLabelText("person-name");
+    const nameInput = getByLabelText('person-name')
 
-    expect(nameInput).not.toBeNull();
-  });
-});
+    expect(nameInput).not.toBeNull()
+  })
+})
