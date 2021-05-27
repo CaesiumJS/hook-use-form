@@ -6,6 +6,7 @@
     "url": "https://github.com/CaesiumJS/hook-use-form",
     "type": "git"
   },
+  "homepage": "https://caesiumjs.github.io/hook-use-form/",
   "main": "lib/react-hook-use-form.js",
   "scripts": {
     "test": "jest",
