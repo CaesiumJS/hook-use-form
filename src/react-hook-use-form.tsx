@@ -20,7 +20,7 @@ export interface FormHookOutput<T>{
   onSubmit: (cb: (data: T) => void) => void
 
   /**
-   * Defines a validator for the form
+   * Defines a validator for the form.
    * 
    * @param field The field to validate.
    * @param validator The function to validate the field, should return a boolean for valid status.
@@ -35,7 +35,9 @@ export interface FormHookOutput<T>{
   valid: (field?: keyof T) => boolean,
 
   /**
-   * Bind to a field, used to quickly setup <input> tags
+   * Bind to a field, used to quickly setup `input` tags.
+   * 
+   * For example `<input {...bind('field')} />`
    * 
    * @param field The field to bind this input to.
    */
@@ -92,27 +94,55 @@ export interface ControlledInput<T, K extends keyof T = keyof T>{
 
   /** Bind to an input */
   bind: {
+    /** The current value of the field. */
     value: T[K]
+
+    /** THe default on change handler. Takes `e.target.value` and uses it as the new field value. */
     onChange: (e: any) => void
+
+    /** The fields name. */
     name: K
+
+    /** Aria label for the field. Is either the name or the name merged with the supplied `ariaModel`. */
     'aria-label': string
+
+    /** Same as the aria label. */
     id: string
   },
 
+  /** 
+   * Returns the binding for a label.
+   * 
+   * e.g. `<label {...label('field)}>Field</label>
+   */
   label: () => ReturnType<FormHookOutput<T>["label"]>
 
+  /** Aria label for the field. Is either the name or the name merged with the supplied `ariaModel`. */
   'aria-label': string
 }
 
 interface DispatchAction<T, K extends keyof T = keyof T>{
+  /** The field to update. */
   field: K
+
+  /** The value to set. */
   value: T[K]
 }
 
 export interface UseFormOptions{
+  /**
+   * Aria Model to use in controlled inputs.
+   */
   ariaModel: string
 }
 
+/**
+ * Creates and manages form state
+ * 
+ * @param initialData The initial state of the form. Needs to have every field as a property.
+ * @param options Configuration for the hook.
+ * @returns State interaction functions.
+ */
 export function useForm<T>(initialData: T, options?: UseFormOptions): FormHookOutput<T>{
   const [data, dispatchData] = useReducer<React.Reducer<T, DispatchAction<T>>>((state, action) => {
     let newState = {...state}

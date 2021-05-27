@@ -9,7 +9,8 @@
   "main": "lib/react-hook-use-form.js",
   "scripts": {
     "test": "jest",
-    "prepublishOnly": "tsc"
+    "build": "tsc",
+    "document": "typedoc --out ./docs --entryPoints src/react-hook-use-form.tsx"
   },
   "author": "Adam Laycock <adam@arcath.net>",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "ts-jest": "^26.5.4",
+    "typedoc": "^0.20.36",
     "typescript": "^4.2.3"
   }
 }
