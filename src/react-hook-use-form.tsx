@@ -79,6 +79,9 @@ export interface FormHookOutput<T>{
   submit: () => void
 }
 
+/**
+ * Interact with a single form field.
+ */
 export interface ControlledInput<T, K extends keyof T = keyof T>{
   /** The field controlled by these functions. */
   field: K
