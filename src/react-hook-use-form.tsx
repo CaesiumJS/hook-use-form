@@ -1,28 +1,29 @@
 import {useReducer, useRef} from 'react'
 
-export interface FormHookOutput<T> {
+export interface FormHookOutput<Data> {
   /** Reset the form to its initial values */
   clear: () => void
 
   /**
    * Returns an object of functions to be used with an input, see `ControlledInput`
    */
-  controlledInput: <K extends keyof T>(
-    field: K,
+  controlledInput: <Key extends keyof Data, Render extends any = Data[Key]>(
+    field: Key,
     fieldOptions?: {
-      onChange?: (value: any) => T[K]
+      onChange?: (value: Render) => Data[Key]
+      render?: (value: Data[Key]) => Render
     }
-  ) => ControlledInput<T, K>
+  ) => ControlledInput<Data, Key, Render>
 
   /** The current data object */
-  data: T
+  data: Data
 
   /**
    * The function passed as a callback will be called when the form is submitted.
    *
    * @param cb Callback function that is passed the current data object when the form is submitted.
    */
-  onSubmit: (cb: (data: T) => void) => void
+  onSubmit: (cb: (data: Data) => void) => void
 
   /**
    * Defines a validator for the form.
@@ -30,9 +31,9 @@ export interface FormHookOutput<T> {
    * @param field The field to validate.
    * @param validator The function to validate the field, should return a boolean for valid status.
    */
-  validate: <K extends keyof T>(
-    field: K,
-    validator: (value: T[K], data: T) => boolean
+  validate: <Key extends keyof Data>(
+    field: Key,
+    validator: (value: Data[Key], data: Data) => boolean
   ) => void
 
   /**
@@ -40,7 +41,7 @@ export interface FormHookOutput<T> {
    *
    * @param field (Optional), if supplied the validation status of the given field will be returned, otherwise the whole forms status will be returned.
    */
-  valid: (field?: keyof T) => boolean
+  valid: (field?: keyof Data) => boolean
 
   /**
    * Bind to a field, used to quickly setup `input` tags.
@@ -49,7 +50,9 @@ export interface FormHookOutput<T> {
    *
    * @param field The field to bind this input to.
    */
-  bind: <K extends keyof T>(field: K) => ControlledInput<T, K>['bind']
+  bind: <Key extends keyof Data>(
+    field: Key
+  ) => ControlledInput<Data, Key>['bind']
 
   /**
    * Binds the form to `useForm`.
@@ -65,19 +68,19 @@ export interface FormHookOutput<T> {
    *
    * @param data The new data object to use.
    */
-  set: (data: Partial<T>) => void
+  set: (data: Partial<Data>) => void
 
   /**
    * Returns the required fields for a label.
    */
-  label: <K extends keyof T>(field: K) => {htmlFor: string}
+  label: <Key extends keyof Data>(field: Key) => {htmlFor: string}
 
   /**
    * Has the value changed from its original.
    *
    * @param field (Optional) limit search to a single field.
    */
-  changed: (field?: keyof T) => boolean
+  changed: (field?: keyof Data) => boolean
 
   /**
    * Submit the form. Useful if you need a button outside the form to submit the value.
@@ -90,15 +93,19 @@ export interface FormHookOutput<T> {
 /**
  * Interact with a single form field.
  */
-export interface ControlledInput<T, K extends keyof T = keyof T> {
+export interface ControlledInput<
+  Data,
+  Key extends keyof Data = keyof Data,
+  Render extends any = Data[Key]
+> {
   /** The field controlled by these functions. */
-  field: K
+  field: Key
 
   /** The fields current value. */
-  value: T[K]
+  value: Render
 
   /** Set the fields value to the supplied value. */
-  update: (newValue: T[K]) => void
+  update: (newValue: Render) => void
 
   /** Is the current field value valid? */
   valid: () => boolean
@@ -106,13 +113,13 @@ export interface ControlledInput<T, K extends keyof T = keyof T> {
   /** Bind to an input */
   bind: {
     /** The current value of the field. */
-    value: T[K]
+    value: Render
 
     /** THe default on change handler. Takes `e.target.value` and uses it as the new field value. */
     onChange: (e: any) => void
 
     /** The fields name. */
-    name: K
+    name: Key
 
     /** Aria label for the field. Is either the name or the name merged with the supplied `ariaModel`. */
     'aria-label': string
@@ -126,7 +133,7 @@ export interface ControlledInput<T, K extends keyof T = keyof T> {
    *
    * e.g. `<label {...label('field)}>Field</label>
    */
-  label: () => ReturnType<FormHookOutput<T>['label']>
+  label: () => ReturnType<FormHookOutput<Data>['label']>
 
   /** Aria label for the field. Is either the name or the name merged with the supplied `ariaModel`. */
   'aria-label': string
@@ -154,59 +161,63 @@ export interface UseFormOptions {
  * @param options Configuration for the hook.
  * @returns State interaction functions.
  */
-export function useForm<T>(
-  initialData: T,
+export function useForm<Data>(
+  initialData: Data,
   options?: UseFormOptions
-): FormHookOutput<T> {
-  const [data, dispatchData] = useReducer<React.Reducer<T, DispatchAction<T>>>(
-    (state, action) => {
-      let newState = {...state}
+): FormHookOutput<Data> {
+  const [data, dispatchData] = useReducer<
+    React.Reducer<Data, DispatchAction<Data>>
+  >((state, action) => {
+    let newState = {...state}
 
-      newState[action.field] = action.value
+    newState[action.field] = action.value
 
-      return newState
-    },
-    initialData
-  )
+    return newState
+  }, initialData)
 
   const originalData = {...initialData}
 
   const staticFunctions = useRef({
-    set: (data: Partial<T>) => {
+    set: (data: Partial<Data>) => {
       Object.keys(data).forEach(field => {
-        dispatchData({field: field as keyof T, value: data[field]})
+        dispatchData({field: field as keyof Data, value: data[field]})
       })
     },
     clear: () => {
       Object.keys(initialData).forEach(field => {
-        dispatchData({field: field as keyof T, value: initialData[field]})
+        dispatchData({field: field as keyof Data, value: initialData[field]})
       })
     }
   })
 
   /** The default onSubmit, this is so we can overwrite it when the user calls `onSubmit` */
-  let onSubmitCallback = (data: T) => {
+  let onSubmitCallback = (data: Data) => {
     // NOOP
   }
 
-  let validators: {[field: string]: (value: any, data: T) => boolean} = {}
+  let validators: {[field: string]: (value: any, data: Data) => boolean} = {}
 
   Object.keys(data).forEach(key => {
     validators[key] = () => true
   })
 
-  const controlledInput = <K extends keyof T>(
-    field: K,
+  const controlledInput = <
+    Key extends keyof Data,
+    Render extends any = Data[Key]
+  >(
+    field: Key,
     fieldOptions?: {
-      onChange?: (value: any) => T[K]
+      onChange?: (value: Render) => Data[Key]
+      render?: (value: Data[Key]) => Render
     }
-  ): ControlledInput<T, K> => {
-    const update = (value: T[K]) => {
+  ): ControlledInput<Data, Key, Render> => {
+    const update = (value: Render) => {
       if (fieldOptions !== undefined && fieldOptions.onChange !== undefined) {
-        value = fieldOptions.onChange(value)
+        dispatchData({field, value: fieldOptions.onChange(value)})
+        return
       }
 
-      dispatchData({field, value})
+      dispatchData({field, value: value as Data[Key]})
     }
 
     const valid = () => validators[field as string](data[field], data)
@@ -216,13 +227,19 @@ export function useForm<T>(
         ? `${options.ariaModel}-${field}`
         : `${field}`
 
+    const value = (
+      fieldOptions && fieldOptions.render
+        ? fieldOptions.render(data[field])
+        : data[field]
+    ) as Render
+
     return {
       field,
-      value: data[field],
+      value,
       update,
       valid,
       bind: {
-        value: data[field],
+        value,
         name: field,
         onChange: e => update((e.target as any).value),
         'aria-label': ariaLabel,
@@ -233,18 +250,18 @@ export function useForm<T>(
     }
   }
 
-  const onSubmit = (cb: (data: T) => void) => {
+  const onSubmit = (cb: (data: Data) => void) => {
     onSubmitCallback = cb
   }
 
   const validate = (
-    field: keyof T,
-    validator: (value: any, data: T) => boolean
+    field: keyof Data,
+    validator: (value: any, data: Data) => boolean
   ) => {
     validators[field as string] = validator
   }
 
-  const valid = (field?: keyof T) => {
+  const valid = (field?: keyof Data) => {
     if (field) {
       return validators[field as string](data[field], data)
     }
@@ -254,11 +271,11 @@ export function useForm<T>(
     }, true)
   }
 
-  const bind = <K extends keyof T>(field: K) => {
+  const bind = <Key extends keyof Data>(field: Key) => {
     return controlledInput(field).bind
   }
 
-  const label = <K extends keyof T>(field: K) => {
+  const label = <Key extends keyof Data>(field: Key) => {
     const id =
       options && options.ariaModel
         ? `${options.ariaModel}-${field}`
@@ -282,7 +299,7 @@ export function useForm<T>(
     onSubmitCallback(data)
   }
 
-  const changed = (field?: keyof T): boolean => {
+  const changed = (field?: keyof Data): boolean => {
     if (field) {
       console.dir(originalData)
 

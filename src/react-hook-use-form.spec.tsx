@@ -320,25 +320,34 @@ describe('React Form Hooks', () => {
     let pass = false
 
     const Component: React.FC = () => {
-      const {formBind, controlledInput, onSubmit} = useForm({sample: 't'})
+      const {formBind, controlledInput, onSubmit} = useForm({sample: 'abc'})
 
       const control = controlledInput('sample', {
-        onChange: v => {
+        onChange: (v: string[]) => {
           called = true
 
-          return 'T'
+          return v.join('')
+        },
+        render: (v: string) => {
+          return v.split('')
         }
       })
 
       onSubmit(({sample}) => {
         pass = true
 
-        expect(sample).toBe('T')
+        expect(sample).toBe('pass')
       })
 
       return (
         <form {...formBind()}>
-          <input {...control.bind} />
+          <input
+            onChange={(e: any) => {
+              // because we are coming through a input field this is a string when it shouldn't be
+              control.update(e.target.value.split(','))
+            }}
+            aria-label="sample"
+          />
           <input type="submit" value="submit" />
         </form>
       )
@@ -348,7 +357,7 @@ describe('React Form Hooks', () => {
 
     const sampleInput = getByLabelText('sample')
 
-    fireEvent.change(sampleInput, {target: {value: 'pass'}})
+    fireEvent.change(sampleInput, {target: {value: ['p', 'a', 's', 's']}})
 
     expect(called).toBe(true)
 
