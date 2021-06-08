@@ -314,4 +314,48 @@ describe('React Form Hooks', () => {
 
     expect(nameInput).not.toBeNull()
   })
+
+  it('should allow you to have a custom onChange for controlled inputs', () => {
+    let called = false
+    let pass = false
+
+    const Component: React.FC = () => {
+      const {formBind, controlledInput, onSubmit} = useForm({sample: 't'})
+
+      const control = controlledInput('sample', {
+        onChange: v => {
+          called = true
+
+          return 'T'
+        }
+      })
+
+      onSubmit(({sample}) => {
+        pass = true
+
+        expect(sample).toBe('T')
+      })
+
+      return (
+        <form {...formBind()}>
+          <input {...control.bind} />
+          <input type="submit" value="submit" />
+        </form>
+      )
+    }
+
+    const {getByLabelText, getByText} = render(<Component />)
+
+    const sampleInput = getByLabelText('sample')
+
+    fireEvent.change(sampleInput, {target: {value: 'pass'}})
+
+    expect(called).toBe(true)
+
+    const submitButton = getByText('submit')
+
+    fireEvent.click(submitButton)
+
+    expect(pass).toBe(true)
+  })
 })

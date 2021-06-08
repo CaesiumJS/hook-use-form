@@ -7,7 +7,12 @@ export interface FormHookOutput<T> {
   /**
    * Returns an object of functions to be used with an input, see `ControlledInput`
    */
-  controlledInput: <K extends keyof T>(field: K) => ControlledInput<T, K>
+  controlledInput: <K extends keyof T>(
+    field: K,
+    fieldOptions?: {
+      onChange?: (value: any) => T[K]
+    }
+  ) => ControlledInput<T, K>
 
   /** The current data object */
   data: T
@@ -191,9 +196,16 @@ export function useForm<T>(
   })
 
   const controlledInput = <K extends keyof T>(
-    field: K
+    field: K,
+    fieldOptions?: {
+      onChange?: (value: any) => T[K]
+    }
   ): ControlledInput<T, K> => {
     const update = (value: T[K]) => {
+      if (fieldOptions !== undefined && fieldOptions.onChange !== undefined) {
+        value = fieldOptions.onChange(value)
+      }
+
       dispatchData({field, value})
     }
 
