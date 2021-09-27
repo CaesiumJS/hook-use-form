@@ -1,276 +1,159 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@caesium/hook-use-form</title>
-	<meta name="description" content="Documentation for @caesium/hook-use-form">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">@caesium/hook-use-form</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>@caesium/hook-use-form</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#react-hook-useform" id="react-hook-useform" style="color: inherit; text-decoration: none;">
-					<h1>React Hook useForm</h1>
-				</a>
-				<p><code>useForm</code> provides an interface around an object for use in forms.</p>
-				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
-					<h2>Install</h2>
-				</a>
-				<pre><code class="language-bash"><span style="color: #000000">npm install --save @caesium/hook-use-form</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>@caesium/hook-use-form</title><meta name="description" content="Documentation for @caesium/hook-use-form"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">@caesium/hook-use-form</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>@caesium/hook-use-form</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#react-hook-useform" id="react-hook-useform" style="color: inherit; text-decoration: none;">
+  <h1>React Hook useForm</h1>
+</a>
+<p><code>useForm</code> provides an interface around an object for use in forms.</p>
+
+<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+  <h2>Install</h2>
+</a>
+<pre><code class="language-bash"><span class="hl-0">npm install --save @caesium/hook-use-form</span>
 </code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<blockquote>
-					<p>The best <code>useForm</code> experiance comes when using Typescript.</p>
-				</blockquote>
-				<p>Lets say you want to collect a users name and email for a newsletter form.</p>
-				<pre><code class="language-tsx"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">NewsletterSignUp</span><span style="color: #000000">: </span><span style="color: #267F99">React</span><span style="color: #000000">.</span><span style="color: #267F99">FunctionComponent</span><span style="color: #000000"> = () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> {</span><span style="color: #0070C1">formBind</span><span style="color: #000000">, </span><span style="color: #0070C1">bind</span><span style="color: #000000">, </span><span style="color: #0070C1">onSubmit</span><span style="color: #000000">} = </span><span style="color: #795E26">useForm</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">email:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
-<span style="color: #000000">  })</span>
 
-<span style="color: #000000">  </span><span style="color: #795E26">onSubmit</span><span style="color: #000000">((</span><span style="color: #001080">data</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #008000">// `data` is the forms state when it was submitted</span>
-<span style="color: #000000">    </span><span style="color: #795E26">doSignup</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000">.</span><span style="color: #001080">name</span><span style="color: #000000">, </span><span style="color: #001080">data</span><span style="color: #000000">.</span><span style="color: #001080">email</span><span style="color: #000000">)</span>
-<span style="color: #000000">  })</span>
-
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #800000">&lt;form</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">formBind</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #800000">&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">bind</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;name&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">bind</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;email&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #FF0000">type</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;submit&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">value</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;Sign Up!&quot;</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;/</span><span style="color: #267F99">Form</span><span style="color: #800000">&gt;</span>
-<span style="color: #000000">}</span>
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<blockquote>
+<p>The best <code>useForm</code> experiance comes when using Typescript.</p>
+</blockquote>
+<p>Lets say you want to collect a users name and email for a newsletter form.</p>
+<pre><code class="language-tsx"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">NewsletterSignUp</span><span class="hl-0">: </span><span class="hl-3">React</span><span class="hl-0">.</span><span class="hl-3">FunctionComponent</span><span class="hl-0"> = () </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> {</span><span class="hl-4">formBind</span><span class="hl-0">, </span><span class="hl-4">bind</span><span class="hl-0">, </span><span class="hl-4">onSubmit</span><span class="hl-0">} = </span><span class="hl-2">useForm</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-5">name:</span><span class="hl-0"> </span><span class="hl-6">&#39;&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-5">email:</span><span class="hl-0"> </span><span class="hl-6">&#39;&#39;</span><br/><span class="hl-0">  })</span><br/><br/><span class="hl-0">  </span><span class="hl-2">onSubmit</span><span class="hl-0">((</span><span class="hl-5">data</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-7">// `data` is the forms state when it was submitted</span><br/><span class="hl-0">    </span><span class="hl-2">doSignup</span><span class="hl-0">(</span><span class="hl-5">data</span><span class="hl-0">.</span><span class="hl-5">name</span><span class="hl-0">, </span><span class="hl-5">data</span><span class="hl-0">.</span><span class="hl-5">email</span><span class="hl-0">)</span><br/><span class="hl-0">  })</span><br/><br/><span class="hl-0">  </span><span class="hl-8">return</span><span class="hl-0"> </span><span class="hl-9">&lt;</span><span class="hl-10">form</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">formBind</span><span class="hl-11">()</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">bind</span><span class="hl-11">(</span><span class="hl-6">&#39;name&#39;</span><span class="hl-11">)</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">bind</span><span class="hl-11">(</span><span class="hl-6">&#39;email&#39;</span><span class="hl-11">)</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-12">type</span><span class="hl-0">=</span><span class="hl-6">&quot;submit&quot;</span><span class="hl-0"> </span><span class="hl-12">value</span><span class="hl-0">=</span><span class="hl-6">&quot;Sign Up!&quot;</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">  </span><span class="hl-9">&lt;/</span><span class="hl-3">Form</span><span class="hl-9">&gt;</span><br/><span class="hl-0">}</span>
 </code></pre>
-				<p><code>useForm</code>s output is an object with this structure:</p>
-				<table>
-					<thead>
-						<tr>
-							<th align="left">property</th>
-							<th align="left">type</th>
-							<th align="left">value</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td align="left">bind</td>
-							<td align="left"><code>(field: keyof T) =&gt; {value, onChange, name}</code></td>
-							<td align="left">Used to bind to a single field.</td>
-						</tr>
-						<tr>
-							<td align="left">clear</td>
-							<td align="left"><code>() =&gt; void</code></td>
-							<td align="left">Function that sets the form back to its initial value.</td>
-						</tr>
-						<tr>
-							<td align="left">controlledInput</td>
-							<td align="left"><code>(fieldName: keyof T) =&gt; ControlledInput</code></td>
-							<td align="left">Function that is used to create input fields (See Creating your own input).</td>
-						</tr>
-						<tr>
-							<td align="left">data</td>
-							<td align="left"><code>T</code></td>
-							<td align="left">The current state of the form.</td>
-						</tr>
-						<tr>
-							<td align="left">formBind</td>
-							<td align="left"><code>() =&gt; {onSumbit}</code></td>
-							<td align="left">Used to bind a forms submit action to <code>useForm</code></td>
-						</tr>
-						<tr>
-							<td align="left">onSubmit</td>
-							<td align="left"><code>(handler: (data: T) =&gt; void) =&gt; void</code></td>
-							<td align="left">A function which takes a callback to be used when the form is submitted.</td>
-						</tr>
-						<tr>
-							<td align="left">validate</td>
-							<td align="left"><code>(field: keyof T, validator: (value: any) =&gt; boolean) =&gt; void</code></td>
-							<td align="left">A function that takes the field name and validation function as arguments.</td>
-						</tr>
-						<tr>
-							<td align="left">valid</td>
-							<td align="left"><code>(field?: keyof T) =&gt; boolean</code></td>
-							<td align="left">A function that checks the validity of one field or the whole form and returns a boolean value.</td>
-						</tr>
-						<tr>
-							<td align="left">set</td>
-							<td align="left"><code>(data: T) =&gt; void</code></td>
-							<td align="left">Function to set the <code>data</code> to a given value. Useful if you want to use one form to edit multiple entries.</td>
-						</tr>
-						<tr>
-							<td align="left">label</td>
-							<td align="left">`(field: keyof T) =&gt; {for}</td>
-							<td align="left">Returns the fields label <code>for</code>.</td>
-						</tr>
-						<tr>
-							<td align="left">changed</td>
-							<td align="left"><code>(field?: keyof T) =&gt; boolean</code></td>
-							<td align="left">Has the given field, or any field changed from the intial data.</td>
-						</tr>
-						<tr>
-							<td align="left">submit</td>
-							<td align="left"><code>() =&gt; void</code></td>
-							<td align="left">Submit the form.</td>
-						</tr>
-				</tbody></table>
-				<a href="#validation" id="validation" style="color: inherit; text-decoration: none;">
-					<h3>Validation</h3>
-				</a>
-				<p>Validating fields with <code>useForm</code> is easy. Going back to the earlier example, lets ensure that the email contains an <code>@</code></p>
-				<pre><code class="language-tsx"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">NewsletterSignUp</span><span style="color: #000000">: </span><span style="color: #267F99">React</span><span style="color: #000000">.</span><span style="color: #267F99">FunctionComponent</span><span style="color: #000000"> = () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> {</span><span style="color: #0070C1">valid</span><span style="color: #000000">, </span><span style="color: #0070C1">bind</span><span style="color: #000000">, </span><span style="color: #0070C1">formBind</span><span style="color: #000000">, </span><span style="color: #0070C1">validate</span><span style="color: #000000">} = </span><span style="color: #795E26">useForm</span><span style="color: #000000">({</span>
-<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">email:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;&#039;</span>
-<span style="color: #000000">  })</span>
+<p><code>useForm</code>s output is an object with this structure:</p>
+<table>
+<thead>
+<tr>
+<th align="left">property</th>
+<th align="left">type</th>
+<th align="left">value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">bind</td>
+<td align="left"><code>(field: keyof T) =&gt; {value, onChange, name}</code></td>
+<td align="left">Used to bind to a single field.</td>
+</tr>
+<tr>
+<td align="left">clear</td>
+<td align="left"><code>() =&gt; void</code></td>
+<td align="left">Function that sets the form back to its initial value.</td>
+</tr>
+<tr>
+<td align="left">controlledInput</td>
+<td align="left"><code>(fieldName: keyof T) =&gt; ControlledInput</code></td>
+<td align="left">Function that is used to create input fields (See Creating your own input).</td>
+</tr>
+<tr>
+<td align="left">data</td>
+<td align="left"><code>T</code></td>
+<td align="left">The current state of the form.</td>
+</tr>
+<tr>
+<td align="left">formBind</td>
+<td align="left"><code>() =&gt; {onSumbit}</code></td>
+<td align="left">Used to bind a forms submit action to <code>useForm</code></td>
+</tr>
+<tr>
+<td align="left">onSubmit</td>
+<td align="left"><code>(handler: (data: T) =&gt; void) =&gt; void</code></td>
+<td align="left">A function which takes a callback to be used when the form is submitted.</td>
+</tr>
+<tr>
+<td align="left">validate</td>
+<td align="left"><code>(field: keyof T, validator: (value: any) =&gt; boolean) =&gt; void</code></td>
+<td align="left">A function that takes the field name and validation function as arguments.</td>
+</tr>
+<tr>
+<td align="left">valid</td>
+<td align="left"><code>(field?: keyof T) =&gt; boolean</code></td>
+<td align="left">A function that checks the validity of one field or the whole form and returns a boolean value.</td>
+</tr>
+<tr>
+<td align="left">set</td>
+<td align="left"><code>(data: T) =&gt; void</code></td>
+<td align="left">Function to set the <code>data</code> to a given value. Useful if you want to use one form to edit multiple entries.</td>
+</tr>
+<tr>
+<td align="left">label</td>
+<td align="left">`(field: keyof T) =&gt; {for}</td>
+<td align="left">Returns the fields label <code>for</code>.</td>
+</tr>
+<tr>
+<td align="left">changed</td>
+<td align="left"><code>(field?: keyof T) =&gt; boolean</code></td>
+<td align="left">Has the given field, or any field changed from the intial data.</td>
+</tr>
+<tr>
+<td align="left">submit</td>
+<td align="left"><code>() =&gt; void</code></td>
+<td align="left">Submit the form.</td>
+</tr>
+<tr>
+<td align="left">meta</td>
+<td align="left"><code>Meta</code></td>
+<td align="left">The meta data set in options.</td>
+</tr>
+</tbody></table>
 
-<span style="color: #000000">  </span><span style="color: #795E26">validate</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;email&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">value</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #795E26">indexOf</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@&#039;</span><span style="color: #000000">) &gt; -</span><span style="color: #098658">1</span>
-<span style="color: #000000">  })</span>
-
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #800000">&lt;form</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">formBind</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #800000">&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">bind</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;name&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #FF0000">style</span><span style="color: #000000">=</span><span style="color: #0000FF">{</span><span style="color: #000000FF">{</span><span style="color: #001080">color:</span><span style="color: #000000FF"> </span><span style="color: #795E26">valid</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;name&#039;</span><span style="color: #000000FF">) </span><span style="color: #000000">?</span><span style="color: #000000FF"> </span><span style="color: #A31515">&#039;#000&#039;</span><span style="color: #000000FF"> </span><span style="color: #000000">:</span><span style="color: #000000FF"> </span><span style="color: #A31515">&#039;#f00&#039;</span><span style="color: #000000FF">}</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #795E26">bind</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;email&#039;</span><span style="color: #000000FF">)</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #FF0000">style</span><span style="color: #000000">=</span><span style="color: #0000FF">{</span><span style="color: #000000FF">{</span><span style="color: #001080">color:</span><span style="color: #000000FF"> </span><span style="color: #795E26">valid</span><span style="color: #000000FF">(</span><span style="color: #A31515">&#039;email&#039;</span><span style="color: #000000FF">) </span><span style="color: #000000">?</span><span style="color: #000000FF"> </span><span style="color: #A31515">&#039;#000&#039;</span><span style="color: #000000FF"> </span><span style="color: #000000">:</span><span style="color: #000000FF"> </span><span style="color: #A31515">&#039;#f00&#039;</span><span style="color: #000000FF">}</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">    </span><span style="color: #800000">&lt;input</span><span style="color: #000000"> </span><span style="color: #FF0000">type</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;submit&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">value</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;Subscribe&quot;</span><span style="color: #000000"> </span><span style="color: #FF0000">disabled</span><span style="color: #000000">=</span><span style="color: #0000FF">{</span><span style="color: #000000">!</span><span style="color: #795E26">valid</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #000000"> </span><span style="color: #800000">/&gt;</span>
-<span style="color: #000000">  </span><span style="color: #800000">&lt;/form&gt;</span>
-<span style="color: #000000">}</span>
+<a href="#meta-data" id="meta-data" style="color: inherit; text-decoration: none;">
+  <h3>Meta Data</h3>
+</a>
+<p>You can optionally store meta data in the form state by passing a meta object in options.</p>
+<pre><code class="language-tsx"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">MyForm</span><span class="hl-0"> = () </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> {</span><span class="hl-4">formBind</span><span class="hl-0">, </span><span class="hl-4">meta</span><span class="hl-0">, </span><span class="hl-4">bind</span><span class="hl-0">, </span><span class="hl-4">onSubmit</span><span class="hl-0">, </span><span class="hl-4">set</span><span class="hl-0">} = </span><span class="hl-2">useForm</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-5">name:</span><span class="hl-0"> </span><span class="hl-6">&#39;&#39;</span><br/><span class="hl-0">  }, {</span><span class="hl-5">meta:</span><span class="hl-0"> {</span><span class="hl-5">userId:</span><span class="hl-0"> </span><span class="hl-13">0</span><span class="hl-0">}})</span><br/><br/><span class="hl-0">  </span><span class="hl-2">onSubmit</span><span class="hl-0">(({</span><span class="hl-5">name</span><span class="hl-0">}, {</span><span class="hl-5">userId</span><span class="hl-0">}) </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-8">if</span><span class="hl-0">(</span><span class="hl-5">userId</span><span class="hl-0"> === </span><span class="hl-13">0</span><span class="hl-0">){</span><br/><span class="hl-0">      </span><span class="hl-2">newUser</span><span class="hl-0">(</span><span class="hl-5">name</span><span class="hl-0">)</span><br/><span class="hl-0">    }</span><span class="hl-8">else</span><span class="hl-0">{</span><br/><span class="hl-0">      </span><span class="hl-2">updateUser</span><span class="hl-0">(</span><span class="hl-5">userId</span><span class="hl-0">, </span><span class="hl-5">name</span><span class="hl-0">)</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  })</span><br/><br/><span class="hl-0">  </span><span class="hl-8">return</span><span class="hl-0"> </span><span class="hl-9">&lt;</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">form</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">formBind</span><span class="hl-11">()</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><br/><span class="hl-0">      </span><span class="hl-9">&lt;</span><span class="hl-10">b</span><span class="hl-9">&gt;</span><span class="hl-1">{</span><span class="hl-5">meta</span><span class="hl-11">.</span><span class="hl-5">userId</span><span class="hl-11"> </span><span class="hl-0">===</span><span class="hl-11"> </span><span class="hl-13">0</span><span class="hl-11"> </span><span class="hl-0">?</span><span class="hl-11"> </span><span class="hl-6">&#39;Creating user&#39;</span><span class="hl-11"> </span><span class="hl-0">:</span><span class="hl-11"> </span><span class="hl-6">&#39;Editing user&#39;</span><span class="hl-1">}</span><span class="hl-9">&lt;/</span><span class="hl-10">b</span><span class="hl-9">&gt;</span><br/><span class="hl-0">      </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">bind</span><span class="hl-11">(</span><span class="hl-6">&#39;name&#39;</span><span class="hl-11">)</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;/</span><span class="hl-10">form</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">button</span><span class="hl-0"> </span><span class="hl-12">onClick</span><span class="hl-0">=</span><span class="hl-1">{</span><span class="hl-11">() </span><span class="hl-1">=&gt;</span><span class="hl-11"> {</span><br/><span class="hl-11">      </span><span class="hl-2">set</span><span class="hl-11">({</span><span class="hl-5">name:</span><span class="hl-11"> </span><span class="hl-6">&#39;First User&#39;</span><span class="hl-11">}, {</span><span class="hl-5">userId:</span><span class="hl-11"> </span><span class="hl-13">1</span><span class="hl-11">})</span><br/><span class="hl-11">    }</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><span class="hl-0">Edit User 1</span><span class="hl-9">&lt;/</span><span class="hl-10">button</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">button</span><span class="hl-0"> </span><span class="hl-12">onClick</span><span class="hl-0">=</span><span class="hl-1">{</span><span class="hl-11">() </span><span class="hl-1">=&gt;</span><span class="hl-11"> {</span><br/><span class="hl-11">      </span><span class="hl-2">set</span><span class="hl-11">({</span><span class="hl-5">name:</span><span class="hl-11"> </span><span class="hl-6">&#39;Second User&#39;</span><span class="hl-11">}, {</span><span class="hl-5">userId:</span><span class="hl-11"> </span><span class="hl-13">2</span><span class="hl-11">})</span><br/><span class="hl-11">    }</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><span class="hl-0">Edit User 2</span><span class="hl-9">&lt;/</span><span class="hl-10">button</span><span class="hl-9">&gt;</span><br/><span class="hl-0">  </span><span class="hl-9">&lt;/</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-0">}</span>
 </code></pre>
-				<a href="#creating-your-own-input" id="creating-your-own-input" style="color: inherit; text-decoration: none;">
-					<h2>Creating your own input</h2>
-				</a>
-				<p>Sometimes simply using <code>bind</code> wont work as your not using and <code>input</code> and you want to have a custom input.</p>
-				<p><code>useForm</code> returns a function of <code>controlledInput</code> which gives more control over a single field.</p>
-				<p><code>controlledInput</code> returns the following:</p>
-				<table>
-					<thead>
-						<tr>
-							<th align="left">property</th>
-							<th align="left">type</th>
-							<th align="left">value</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td align="left">field</td>
-							<td align="left"><code>keyof T</code></td>
-							<td align="left">The current field</td>
-						</tr>
-						<tr>
-							<td align="left">value</td>
-							<td align="left"><code>T[field]</code></td>
-							<td align="left">The current value (connected to state)</td>
-						</tr>
-						<tr>
-							<td align="left">update</td>
-							<td align="left"><code>(newValue: T[field]) =&gt; void</code></td>
-							<td align="left">Change the value to the supplied value</td>
-						</tr>
-						<tr>
-							<td align="left">valid</td>
-							<td align="left"><code>() =&gt; boolean</code></td>
-							<td align="left">Returns a boolean value for the fields current validity</td>
-						</tr>
-						<tr>
-							<td align="left">bind</td>
-							<td align="left"><code>{value, onChange, name}</code></td>
-							<td align="left">The same as if you had called <code>bind(field)</code> directly from <code>useForm</code></td>
-						</tr>
-						<tr>
-							<td align="left">id</td>
-							<td align="left"><code>string</code></td>
-							<td align="left">The id of the input.</td>
-						</tr>
-				</tbody></table>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Exports</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/controlledinput.html" class="tsd-kind-icon">Controlled<wbr>Input</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/formhookoutput.html" class="tsd-kind-icon">Form<wbr>Hook<wbr>Output</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/useformoptions.html" class="tsd-kind-icon">Use<wbr>Form<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="modules.html#useform" class="tsd-kind-icon">use<wbr>Form</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p><code>meta</code> can then be updated through the second parameter of <code>set</code>. This allows you to store additional state with your form instead of using <code>useState</code> in your own components.</p>
+<p><code>meta</code> is passed to your submit handler as the second argument.</p>
+
+<a href="#validation" id="validation" style="color: inherit; text-decoration: none;">
+  <h3>Validation</h3>
+</a>
+<p>Validating fields with <code>useForm</code> is easy. Going back to the earlier example, lets ensure that the email contains an <code>@</code></p>
+<pre><code class="language-tsx"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">NewsletterSignUp</span><span class="hl-0">: </span><span class="hl-3">React</span><span class="hl-0">.</span><span class="hl-3">FunctionComponent</span><span class="hl-0"> = () </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">  </span><span class="hl-1">const</span><span class="hl-0"> {</span><span class="hl-4">valid</span><span class="hl-0">, </span><span class="hl-4">bind</span><span class="hl-0">, </span><span class="hl-4">formBind</span><span class="hl-0">, </span><span class="hl-4">validate</span><span class="hl-0">} = </span><span class="hl-2">useForm</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-5">name:</span><span class="hl-0"> </span><span class="hl-6">&#39;&#39;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-5">email:</span><span class="hl-0"> </span><span class="hl-6">&#39;&#39;</span><br/><span class="hl-0">  })</span><br/><br/><span class="hl-0">  </span><span class="hl-2">validate</span><span class="hl-0">(</span><span class="hl-6">&#39;email&#39;</span><span class="hl-0">, (</span><span class="hl-5">value</span><span class="hl-0">) </span><span class="hl-1">=&gt;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-8">return</span><span class="hl-0"> </span><span class="hl-5">value</span><span class="hl-0">.</span><span class="hl-2">indexOf</span><span class="hl-0">(</span><span class="hl-6">&#39;@&#39;</span><span class="hl-0">) &gt; -</span><span class="hl-13">1</span><br/><span class="hl-0">  })</span><br/><br/><span class="hl-0">  </span><span class="hl-8">return</span><span class="hl-0"> </span><span class="hl-9">&lt;</span><span class="hl-10">form</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">formBind</span><span class="hl-11">()</span><span class="hl-1">}</span><span class="hl-9">&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">bind</span><span class="hl-11">(</span><span class="hl-6">&#39;name&#39;</span><span class="hl-11">)</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-12">style</span><span class="hl-0">=</span><span class="hl-1">{</span><span class="hl-11">{</span><span class="hl-5">color:</span><span class="hl-11"> </span><span class="hl-2">valid</span><span class="hl-11">(</span><span class="hl-6">&#39;name&#39;</span><span class="hl-11">) </span><span class="hl-0">?</span><span class="hl-11"> </span><span class="hl-6">&#39;#000&#39;</span><span class="hl-11"> </span><span class="hl-0">:</span><span class="hl-11"> </span><span class="hl-6">&#39;#f00&#39;</span><span class="hl-11">}</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-1">{</span><span class="hl-0">...</span><span class="hl-2">bind</span><span class="hl-11">(</span><span class="hl-6">&#39;email&#39;</span><span class="hl-11">)</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-12">style</span><span class="hl-0">=</span><span class="hl-1">{</span><span class="hl-11">{</span><span class="hl-5">color:</span><span class="hl-11"> </span><span class="hl-2">valid</span><span class="hl-11">(</span><span class="hl-6">&#39;email&#39;</span><span class="hl-11">) </span><span class="hl-0">?</span><span class="hl-11"> </span><span class="hl-6">&#39;#000&#39;</span><span class="hl-11"> </span><span class="hl-0">:</span><span class="hl-11"> </span><span class="hl-6">&#39;#f00&#39;</span><span class="hl-11">}</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">    </span><span class="hl-9">&lt;</span><span class="hl-10">input</span><span class="hl-0"> </span><span class="hl-12">type</span><span class="hl-0">=</span><span class="hl-6">&quot;submit&quot;</span><span class="hl-0"> </span><span class="hl-12">value</span><span class="hl-0">=</span><span class="hl-6">&quot;Subscribe&quot;</span><span class="hl-0"> </span><span class="hl-12">disabled</span><span class="hl-0">=</span><span class="hl-1">{</span><span class="hl-0">!</span><span class="hl-2">valid</span><span class="hl-11">()</span><span class="hl-1">}</span><span class="hl-0"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-0">  </span><span class="hl-9">&lt;/</span><span class="hl-10">form</span><span class="hl-9">&gt;</span><br/><span class="hl-0">}</span>
+</code></pre>
+
+<a href="#creating-your-own-input" id="creating-your-own-input" style="color: inherit; text-decoration: none;">
+  <h2>Creating your own input</h2>
+</a>
+<p>Sometimes simply using <code>bind</code> wont work as your not using and <code>input</code> and you want to have a custom input.</p>
+<p><code>useForm</code> returns a function of <code>controlledInput</code> which gives more control over a single field.</p>
+<p><code>controlledInput</code> returns the following:</p>
+<table>
+<thead>
+<tr>
+<th align="left">property</th>
+<th align="left">type</th>
+<th align="left">value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">field</td>
+<td align="left"><code>keyof T</code></td>
+<td align="left">The current field</td>
+</tr>
+<tr>
+<td align="left">value</td>
+<td align="left"><code>T[field]</code></td>
+<td align="left">The current value (connected to state)</td>
+</tr>
+<tr>
+<td align="left">update</td>
+<td align="left"><code>(newValue: T[field]) =&gt; void</code></td>
+<td align="left">Change the value to the supplied value</td>
+</tr>
+<tr>
+<td align="left">valid</td>
+<td align="left"><code>() =&gt; boolean</code></td>
+<td align="left">Returns a boolean value for the fields current validity</td>
+</tr>
+<tr>
+<td align="left">bind</td>
+<td align="left"><code>{value, onChange, name}</code></td>
+<td align="left">The same as if you had called <code>bind(field)</code> directly from <code>useForm</code></td>
+</tr>
+<tr>
+<td align="left">id</td>
+<td align="left"><code>string</code></td>
+<td align="left">The id of the input.</td>
+</tr>
+</tbody></table>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/ControlledInput.html" class="tsd-kind-icon">Controlled<wbr/>Input</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/FormHookOutput.html" class="tsd-kind-icon">Form<wbr/>Hook<wbr/>Output</a></li><li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/UseFormOptions.html" class="tsd-kind-icon">Use<wbr/>Form<wbr/>Options</a></li><li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#useForm" class="tsd-kind-icon">use<wbr/>Form</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
