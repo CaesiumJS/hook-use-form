@@ -367,4 +367,75 @@ describe('React Form Hooks', () => {
 
     expect(pass).toBe(true)
   })
+
+  it('should support meta value', async () => {
+    const Component: React.FC = () => {
+      const {formBind, bind, meta, set} = useForm(
+        {
+          name: ''
+        },
+        {meta: {userId: 10}}
+      )
+
+      return (
+        <form {...formBind()}>
+          <input {...bind('name')} />
+          <p>Updating user #{meta.userId}</p>
+          <button
+            onClick={() => {
+              set({name: 'Updated'}, {userId: 20})
+            }}
+          >
+            Update
+          </button>
+        </form>
+      )
+    }
+
+    const {container, getByText} = render(<Component />)
+
+    expect(container).toMatchInlineSnapshot(`
+<div>
+  <form>
+    <input
+      aria-label="name"
+      id="name"
+      name="name"
+      value=""
+    />
+    <p>
+      Updating user #
+      10
+    </p>
+    <button>
+      Update
+    </button>
+  </form>
+</div>
+`)
+
+    const updateButton = getByText('Update')
+
+    fireEvent.click(updateButton)
+
+    expect(container).toMatchInlineSnapshot(`
+<div>
+  <form>
+    <input
+      aria-label="name"
+      id="name"
+      name="name"
+      value="Updated"
+    />
+    <p>
+      Updating user #
+      20
+    </p>
+    <button>
+      Update
+    </button>
+  </form>
+</div>
+`)
+  })
 })

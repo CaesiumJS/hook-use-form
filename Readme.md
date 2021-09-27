@@ -50,6 +50,44 @@ const NewsletterSignUp: React.FunctionComponent = () => {
 |label|`(field: keyof T) => {for}|Returns the fields label `for`.|
 |changed|`(field?: keyof T) => boolean`|Has the given field, or any field changed from the intial data.|
 |submit|`() => void`|Submit the form.|
+|meta|`Meta`|The meta data set in options.|
+
+### Meta Data
+
+You can optionally store meta data in the form state by passing a meta object in options.
+
+```tsx
+const MyForm = () => {
+  const {formBind, meta, bind, onSubmit, set} = useForm({
+    name: ''
+  }, {meta: {userId: 0}})
+
+  onSubmit(({name}, {userId}) => {
+    if(userId === 0){
+      newUser(name)
+    }else{
+      updateUser(userId, name)
+    }
+  })
+
+  return <div>
+    <form {...formBind()}>
+      <b>{meta.userId === 0 ? 'Creating user' : 'Editing user'}</b>
+      <input {...bind('name')}>
+    </form>
+    <button onClick={() => {
+      set({name: 'First User'}, {userId: 1})
+    }}>Edit User 1</button>
+    <button onClick={() => {
+      set({name: 'Second User'}, {userId: 2})
+    }}>Edit User 2</button>
+  </div>
+}
+```
+
+`meta` can then be updated through the second parameter of `set`. This allows you to store additional state with your form instead of using `useState` in your own components.
+
+`meta` is passed to your submit handler as the second argument.
 
 ### Validation
 

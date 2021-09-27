@@ -1,6 +1,6 @@
-import {useReducer, useRef} from 'react'
+import {useReducer, useRef, useState} from 'react'
 
-export interface FormHookOutput<Data> {
+export interface FormHookOutput<Data, Meta = {}> {
   /** Reset the form to its initial values */
   clear: () => void
 
@@ -18,12 +18,15 @@ export interface FormHookOutput<Data> {
   /** The current data object */
   data: Data
 
+  /** Forms meta data */
+  meta: Meta
+
   /**
    * The function passed as a callback will be called when the form is submitted.
    *
    * @param cb Callback function that is passed the current data object when the form is submitted.
    */
-  onSubmit: (cb: (data: Data) => void) => void
+  onSubmit: (cb: (data: Data, meta: Meta) => void) => void
 
   /**
    * Defines a validator for the form.
@@ -33,7 +36,7 @@ export interface FormHookOutput<Data> {
    */
   validate: <Key extends keyof Data>(
     field: Key,
-    validator: (value: Data[Key], data: Data) => boolean
+    validator: (value: Data[Key], data: Data, meta: Meta) => boolean
   ) => void
 
   /**
@@ -68,7 +71,7 @@ export interface FormHookOutput<Data> {
    *
    * @param data The new data object to use.
    */
-  set: (data: Partial<Data>) => void
+  set: (data: Partial<Data>, meta?: Partial<Meta>) => void
 
   /**
    * Returns the required fields for a label.
@@ -147,11 +150,13 @@ interface DispatchAction<T, K extends keyof T = keyof T> {
   value: T[K]
 }
 
-export interface UseFormOptions {
+export interface UseFormOptions<Meta> {
   /**
    * Aria Model to use in controlled inputs.
    */
-  ariaModel: string
+  ariaModel?: string
+  /** Initial meta data for the form. Defines the type of the meta data. */
+  meta?: Meta
 }
 
 /**
@@ -161,10 +166,10 @@ export interface UseFormOptions {
  * @param options Configuration for the hook.
  * @returns State interaction functions.
  */
-export function useForm<Data>(
+export function useForm<Data, Meta = {}>(
   initialData: Data,
-  options?: UseFormOptions
-): FormHookOutput<Data> {
+  options?: UseFormOptions<Meta>
+): FormHookOutput<Data, Meta> {
   const [data, dispatchData] = useReducer<
     React.Reducer<Data, DispatchAction<Data>>
   >((state, action) => {
@@ -176,12 +181,19 @@ export function useForm<Data>(
   }, initialData)
 
   const originalData = {...initialData}
+  const [meta, setMeta] = useState(
+    options && options.meta ? options.meta : ({} as Meta)
+  )
 
   const staticFunctions = useRef({
-    set: (data: Partial<Data>) => {
+    set: (data: Partial<Data>, newMeta?: Partial<Meta>) => {
       Object.keys(data).forEach(field => {
         dispatchData({field: field as keyof Data, value: data[field]})
       })
+
+      if (meta) {
+        setMeta({...meta, ...newMeta})
+      }
     },
     clear: () => {
       Object.keys(initialData).forEach(field => {
@@ -191,11 +203,13 @@ export function useForm<Data>(
   })
 
   /** The default onSubmit, this is so we can overwrite it when the user calls `onSubmit` */
-  let onSubmitCallback = (data: Data) => {
+  let onSubmitCallback = (data: Data, meta: Meta) => {
     // NOOP
   }
 
-  let validators: {[field: string]: (value: any, data: Data) => boolean} = {}
+  let validators: {
+    [field: string]: (value: any, data: Data, meta: Meta) => boolean
+  } = {}
 
   Object.keys(data).forEach(key => {
     validators[key] = () => true
@@ -220,7 +234,7 @@ export function useForm<Data>(
       dispatchData({field, value: value as Data[Key]})
     }
 
-    const valid = () => validators[field as string](data[field], data)
+    const valid = () => validators[field as string](data[field], data, meta)
 
     const ariaLabel =
       options && options.ariaModel
@@ -250,24 +264,24 @@ export function useForm<Data>(
     }
   }
 
-  const onSubmit = (cb: (data: Data) => void) => {
+  const onSubmit = (cb: (data: Data, meta: Meta) => void) => {
     onSubmitCallback = cb
   }
 
   const validate = (
     field: keyof Data,
-    validator: (value: any, data: Data) => boolean
+    validator: (value: any, data: Data, meta: Meta) => boolean
   ) => {
     validators[field as string] = validator
   }
 
   const valid = (field?: keyof Data) => {
     if (field) {
-      return validators[field as string](data[field], data)
+      return validators[field as string](data[field], data, meta)
     }
 
     return Object.keys(data).reduce((acc, key) => {
-      return acc && validators[key]((data as any)[key] as any, data)
+      return acc && validators[key]((data as any)[key] as any, data, meta)
     }, true)
   }
 
@@ -290,13 +304,13 @@ export function useForm<Data>(
     return {
       onSubmit: (e: any) => {
         e.preventDefault()
-        onSubmitCallback(data)
+        onSubmitCallback(data, meta)
       }
     }
   }
 
   const submit = () => {
-    onSubmitCallback(data)
+    onSubmitCallback(data, meta)
   }
 
   const changed = (field?: keyof Data): boolean => {
@@ -327,6 +341,7 @@ export function useForm<Data>(
     set: staticFunctions.current.set,
     label,
     changed,
-    submit
+    submit,
+    meta
   }
 }
