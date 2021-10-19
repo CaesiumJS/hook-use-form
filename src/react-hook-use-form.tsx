@@ -91,6 +91,18 @@ export interface FormHookOutput<Data, Meta = {}> {
    * _Make sure to bind the form aswell incase it is submitted by another means_
    */
   submit: () => void
+
+  /**
+   * Add an onChange handler for the given field.
+   *
+   * Works with `bind`.
+   *
+   * For more control use a `controlledInput` with `onChange` and `onRender` functions.
+   */
+  onChange: <Key extends keyof Data>(
+    field: Key,
+    handler: (value: string) => Data[Key]
+  ) => void
 }
 
 /**
@@ -185,6 +197,8 @@ export function useForm<Data, Meta = {}>(
     options && options.meta ? options.meta : ({} as Meta)
   )
 
+  const onChangeHandlers: {[field: string]: (value: string) => any} = {}
+
   const staticFunctions = useRef({
     set: (data: Partial<Data>, newMeta?: Partial<Meta>) => {
       Object.keys(data).forEach(field => {
@@ -228,6 +242,15 @@ export function useForm<Data, Meta = {}>(
     const update = (value: Render) => {
       if (fieldOptions !== undefined && fieldOptions.onChange !== undefined) {
         dispatchData({field, value: fieldOptions.onChange(value)})
+        return
+      }
+
+      if (onChangeHandlers[field as string]) {
+        dispatchData({
+          field,
+          value: onChangeHandlers[field as string](value as string)
+        })
+
         return
       }
 
@@ -315,8 +338,6 @@ export function useForm<Data, Meta = {}>(
 
   const changed = (field?: keyof Data): boolean => {
     if (field) {
-      console.dir(originalData)
-
       return originalData[field] !== data[field]
     }
 
@@ -327,6 +348,13 @@ export function useForm<Data, Meta = {}>(
 
       return originalData[field] !== data[field]
     }, false)
+  }
+
+  const onChange = <Key extends keyof Data>(
+    field: Key,
+    handler: (value: string) => Data[Key]
+  ) => {
+    onChangeHandlers[field as string] = handler
   }
 
   return {
@@ -342,6 +370,7 @@ export function useForm<Data, Meta = {}>(
     label,
     changed,
     submit,
-    meta
+    meta,
+    onChange
   }
 }

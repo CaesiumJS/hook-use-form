@@ -395,47 +395,106 @@ describe('React Form Hooks', () => {
     const {container, getByText} = render(<Component />)
 
     expect(container).toMatchInlineSnapshot(`
-<div>
-  <form>
-    <input
-      aria-label="name"
-      id="name"
-      name="name"
-      value=""
-    />
-    <p>
-      Updating user #
-      10
-    </p>
-    <button>
-      Update
-    </button>
-  </form>
-</div>
-`)
+      <div>
+        <form>
+          <input
+            aria-label="name"
+            id="name"
+            name="name"
+            value=""
+          />
+          <p>
+            Updating user #
+            10
+          </p>
+          <button>
+            Update
+          </button>
+        </form>
+      </div>
+    `)
 
     const updateButton = getByText('Update')
 
     fireEvent.click(updateButton)
 
     expect(container).toMatchInlineSnapshot(`
-<div>
-  <form>
-    <input
-      aria-label="name"
-      id="name"
-      name="name"
-      value="Updated"
-    />
-    <p>
-      Updating user #
-      20
-    </p>
-    <button>
-      Update
-    </button>
-  </form>
-</div>
-`)
+      <div>
+        <form>
+          <input
+            aria-label="name"
+            id="name"
+            name="name"
+            value="Updated"
+          />
+          <p>
+            Updating user #
+            20
+          </p>
+          <button>
+            Update
+          </button>
+        </form>
+      </div>
+    `)
+  })
+
+  it('should support onChange handlers', async () => {
+    const Component: React.FC = () => {
+      const {formBind, bind, onChange, data} = useForm({number: 0})
+
+      onChange('number', value => {
+        return parseInt(value) * 2
+      })
+
+      return (
+        <form {...formBind()}>
+          <input type="number" {...bind('number')} />
+          <p>Number: {data.number}</p>
+        </form>
+      )
+    }
+
+    const {container, getByLabelText} = render(<Component />)
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <form>
+          <input
+            aria-label="number"
+            id="number"
+            name="number"
+            type="number"
+            value="0"
+          />
+          <p>
+            Number: 
+            0
+          </p>
+        </form>
+      </div>
+    `)
+
+    const input = getByLabelText('number')
+
+    fireEvent.change(input, {target: {value: '2'}})
+
+    expect(container).toMatchInlineSnapshot(`
+    <div>
+      <form>
+        <input
+          aria-label="number"
+          id="number"
+          name="number"
+          type="number"
+          value="4"
+        />
+        <p>
+          Number: 
+          4
+        </p>
+      </form>
+    </div>
+  `)
   })
 })
